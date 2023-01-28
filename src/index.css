@@ -1,13 +1,51 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@tailwind base;
+@tailwind components;
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+input, textarea { border: none; display: inline-block; box-sizing: border-box; outline: none; background: none; }
+.box-base { @apply mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 };
+.icon-principal { @apply w-6 };
+
+
+/* style base - no modificar  */
+.loader-base { @apply flex items-center justify-center flex-col fixed z-[10000000000] w-full h-full bg-loader top-0 transition ease-linear }
+
+.color-primary { @apply bg-primary text-white hover:bg-primary active:bg-primary }
+.color-secondary { @apply bg-white text-secondary hover:bg-[#F2ECFF] active:bg-[#E3E0F3] }
+.color-rose { @apply bg-secondary text-white hover:bg-rose-500 focus:bg-rose-500 }
+
+.input-base { @apply block w-full px-3 py-1.5 font-normal bg-white bg-clip-padding border border-solid rounded transition ease-in-out m-0 focus:bg-white focus:border-blue-600 outline-none } 
+
+.input-checkbox-base { @apply flex gap-1 items-center }
+.input-checkbox-base input { @apply h-4 w-4 border border-text rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 transition duration-200 cursor-pointer }
+.input-checkbox-base label { @apply inline-block text-text; line-height: 0 }
+
+.input-select-base { @apply block w-full px-3 py-1.5 font-normal bg-white bg-clip-padding border-blue-600 border-2 border-solid rounded transition ease-in-out m-0 outline-none } 
+.input-select-base:not([data-headlessui-state="open"]) { @apply border border-primary } 
+.input-select-base-error { @apply border-red-500 text-red-500 }
+.input-select-base-error:not([data-headlessui-state="open"]) { @apply border-red-500 }
+
+
+.button-base-shadow { box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); }
+.button-base { @apply inline-block px-6 py-2.5 font-Poppins font-semibold leading-tight uppercase rounded button-base-shadow transition duration-150 ease-in-out } 
+.button-icon-base { @apply p-2 inline-block rounded-full leading-normal uppercase w-9 h-9 button-base-shadow focus:outline-none focus:ring-0 transition duration-150 ease-in-out } 
+
+.tooltip { @apply p-2 }
+.tooltip-inner { @apply py-1 px-4 bg-[#6D6D6D] text-white rounded }
+
+.scroll-base::-webkit-scrollbar { @apply w-[8px] }
+.scroll-base::-webkit-scrollbar-thumb { @apply bg-white-300 hover:bg-white-400 rounded-lg transition-all duration-700 }
+.scroll-base::-webkit-scrollbar-track-piece { @apply bg-white-200 }
+
+.boxshadow-card { filter: drop-shadow(0px 24px 10px rgba(0, 0, 0, 0.01)) drop-shadow(0px 14px 8px rgba(0, 0, 0, 0.05)) drop-shadow(0px 6px 6px rgba(0, 0, 0, 0.09)) drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.1)) drop-shadow(0px 0px 0px rgba(0, 0, 0, 0.1)) }
+.margin-base-top-card { @apply mt-4 }
+
+.table-base { @apply min-w-full text-center }
+.table-base thead { @apply bg-white border-b-[.25px] border-white-300 }
+.table-base th { @apply font-semibold text-paragraph-3 px-6 py-2 }
+.table-base tbody tr { @apply bg-white border-b-[.25px] border-white-300 transition duration-300 ease-in-out hover:bg-white-200 }
+.table-base td { @apply px-6 py-2 whitespace-nowrap text-span-1 font-medium text-text }
+/* style base - no modificar  */
+
+.title-banner { @apply font-semibold text-[90px] text-center; line-height: 1; }
+
+@tailwind utilities;
