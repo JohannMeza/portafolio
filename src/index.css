@@ -17,7 +17,7 @@ input, textarea { border: none; display: inline-block; box-sizing: border-box; o
 
 .input-checkbox-base { @apply flex gap-1 items-center }
 .input-checkbox-base input { @apply h-4 w-4 border border-text rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 transition duration-200 cursor-pointer }
-.input-checkbox-base label { @apply inline-block text-text; line-height: 0 }
+.input-checkbox-base label { @apply inline-block text-text;  /* line-height: 0 */ }
 
 .input-select-base { @apply block w-full px-3 py-1.5 font-normal bg-white bg-clip-padding border-blue-600 border-2 border-solid rounded transition ease-in-out m-0 outline-none } 
 .input-select-base:not([data-headlessui-state="open"]) { @apply border border-primary } 
