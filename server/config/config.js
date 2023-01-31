@@ -1,14 +1,16 @@
 const { config } = require("dotenv");
+const EnvConstant = require("../util/EnvConstants");
+
 config();
 
 module.exports = {
   database: {
-    host: process.env.POSTGRESQL_HOST,
-    port: process.env.POSTGRESQL_PORT,
-    user: process.env.POSTGRESQL_USER,
-    password: process.env.POSTGRESQL_PASS,
-    database: process.env.POSTGRESQL_DATABASE,
+    host: EnvConstant.APP_DB_HOST,
+    port: EnvConstant.APP_DB_PORT,
+    user: EnvConstant.APP_DB_USER,
+    password: EnvConstant.APP_DB_PASS,
+    database: EnvConstant.APP_DB_DATABASE,
   },
 
-  jwt: process.env.TOKEN_AUTH
+  jwt: EnvConstant.APP_TOKEN_AUTH
 }

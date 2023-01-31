@@ -47,5 +47,7 @@ input, textarea { border: none; display: inline-block; box-sizing: border-box; o
 /* style base - no modificar  */
 
 .title-banner { @apply font-semibold text-[90px] text-center; line-height: 1; }
+.show { display: block }
+.hide { display: none }
 
 @tailwind utilities;

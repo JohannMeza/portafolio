@@ -9,7 +9,7 @@ import { useFormValidation } from '../../../../hooks/useFormValidation';
 import useLoaderContext from '../../../../hooks/useLoaderContext';
 import { ListConstants } from '../../../../util/ListConstants';
 
-const dataInitial = { MENU_PADRE: null, MENU: "", ORDEN: "", ICON: "", ESTADO: true, TIPO: true }
+const dataInitial = { MENU_PADRE: null, MENU: "", ORDEN: "", ICON: "", ESTADO: true, TIPO: true, RUTA: "" }
 const listMenuPadre = { value: null, label: "Seleccione" };
 const listMenuTipo = [ { value: null, label: "Seleccione" }, { value: true, label: "Menú" }, { value: false, label: "Categoria" } ];
 
@@ -31,6 +31,10 @@ export default function MenuDetailPage () {
 
     if ("TIPO" in fieldValues) {
       temp.TIPO = fieldValues.TIPO === null ? "El campo Tipo Menú es requerido" : "";
+    } 
+
+    if ("RUTA" in fieldValues) {
+      temp.RUTA = !fieldValues.RUTA && data.TIPO ? "El campo Ruta es requerido" : "";
     } 
     
     setErrors({...temp});
@@ -100,6 +104,10 @@ export default function MenuDetailPage () {
   }
 
   useEffect(() => {
+    if (data.TIPO === false) setData((data) => { return { ...data, RUTA: "" } })  
+  }, [data.TIPO])
+
+  useEffect(() => {
     listarMenusPadres()
     if (id) searchMenu()
   }, [])
@@ -114,6 +122,7 @@ export default function MenuDetailPage () {
               <Controls.InputComponent label="Menú" name="MENU" value={data} onChange={handleInputFormChange} error={errors} />
               <Controls.SelectComponent label="Menu Padre" name="MENU_PADRE" list={menuPadre} type="number" value={data} onChange={handleInputFormChange} className="relative z-20" />
               <Controls.SelectComponent label="Tipo" type='number' name="TIPO" list={listMenuTipo} value={data} onChange={handleInputFormChange} error={errors} />
+              <Controls.InputComponent label="Ruta" name="RUTA" value={data} disabled={!data.TIPO && true} onChange={handleInputFormChange} error={errors} />
               <Controls.InputComponent label="Orden" type='number' name="ORDEN" value={data} onChange={handleInputFormChange} error={errors} />
               <Controls.InputComponent label="Icon" name="ICON" value={data} onChange={handleInputFormChange} />
               <Controls.SelectComponent label="Estado" name="ESTADO" value={data} list={ListConstants.LIST_ESTADOS} onChange={handleInputFormChange} error={errors} className="relative z-10" />

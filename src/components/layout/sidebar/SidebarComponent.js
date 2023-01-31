@@ -1,26 +1,42 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Logo from "../../../assets/Logotipo.svg";
+import { SaveRequestData } from "../../../helpers/helpRequestBackend";
+import useLoaderContext from "../../../hooks/useLoaderContext";
 import useMenuContext from "../../../hooks/useMenuContext";
 import { classNames } from "../../../util/ClassNames";
-import Controls from "../../Controls";
 import Icon from "../../icon/Icon";
 
 const heightHeader = 65;
+const styleLinkNav = { whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" };
+const show = { display: "none" };
 
 export default function SidebarComponent() {
   const { menu, setMenu } = useMenuContext();
+  const { setLoader } = useLoaderContext();
+  const [menus, setMenus] = useState([]);
   const styleNavbar = { paddingTop: heightHeader + "px" };
   const styleHeader = { height: heightHeader + "px" };
-  const styleLinkNav = {
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
-    overflow: "hidden",
-  };
 
-  const handleClickLista = (e) => {
-    e.target.closest("li").querySelector("ul").classList.toggle("show");
-  };
+  const getMenus = () => {
+    setLoader(true)
+    SaveRequestData({
+      queryId: 15,
+      body: { ID_PERFIL: 7 },
+      success: (resp) => {
+        setLoader(false)
+        setMenus(resp.dataList)
+      },
+      error: (err) => {
+        setLoader(false)
+        const { message, status } = err;
+        (status < 500) && alert.error(message)
+      }
+    })
+  }
+
+  useEffect(() => {
+    getMenus();
+  }, [])
 
   return (
     <header>
@@ -29,6 +45,7 @@ export default function SidebarComponent() {
         className={classNames(`z-[999998] overflow-y-auto scroll-base w-60 h-full top-0 pt-["${heightHeader}"] shadow-md bg-white fixed transition-[margin-left] duration-700"`, menu ? "" : "-ml-[100%]")}
         style={styleNavbar}
       >
+        {/* Nombre de Usuario */}
         <div className="pt-4 pb-2 px-6">
           <Link href="#!">
             <div className="flex items-center">
@@ -47,137 +64,25 @@ export default function SidebarComponent() {
             </div>
           </Link>
         </div>
-        <div>
-          <span className="text-paragraph-3 font-Poppins font-semibold px-6">
-            Dashboard
-          </span>
-          <ul className="relative px-1">
-            <li className="relative">
-              <Link
-                className="flex select-none gap-2 items-center text-sm py-4 px-6 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out"
-                to="/dashboard/home/admin"
-              >
-                <Icon.EyeSlash className="min-w-[20px] max-w-[20px] w-[20px]" />
-                <span
-                  style={{
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                    overflow: "hidden",
-                  }}
-                >
-                  Home
-                </span>
-              </Link>
-            </li>
-            <li className="relative">
-              <Link
-                className="flex select-none gap-2 items-center text-sm py-4 px-6 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out"
-                to="/dashboard/menu/admin"
-              >
-                <Icon.EyeSlash className="min-w-[20px] max-w-[20px] w-[20px]" />
-                <span
-                  style={{
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                    overflow: "hidden",
-                  }}
-                >
-                  Menu
-                </span>
-              </Link>
-            </li>
-            <li className="relative">
-              <Link
-                className="flex select-none gap-2 items-center text-sm py-4 px-6 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out"
-                to="/dashboard/perfiles/admin"
-              >
-                <Icon.EyeSlash className="min-w-[20px] max-w-[20px] w-[20px]" />
-                <span
-                  style={{
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                    overflow: "hidden",
-                  }}
-                >
-                  Perfiles
-                </span>
-              </Link>
-            </li>
-            <li className="relative">
-              <Link
-                className="flex select-none gap-2 items-center text-sm py-4 px-6 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out"
-                to="/dashboard/home/comentario"
-              >
-                <Icon.EyeSlash className="min-w-[20px] max-w-[20px] w-[20px]" />
-                <span
-                  style={{
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                    overflow: "hidden",
-                  }}
-                >
-                  Permisos
-                </span>
-              </Link>
-            </li>
-            <li className="relative">
-              <Link
-                className="flex select-none gap-2 items-center text-sm py-4 px-6 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out"
-                to="/dashboard/usuarios/admin"
-              >
-                <Icon.EyeSlash className="min-w-[20px] max-w-[20px] w-[20px]" />
-                <span
-                  style={{
-                    whiteSpace: "nowrap",
-                    textOverflow: "ellipsis",
-                    overflow: "hidden",
-                  }}
-                >
-                  Usuarios
-                </span>
-              </Link>
-            </li>
-            <li className="relative" id="sidenavSecEx2">
-              <Controls.TooltipComponent
-                className="flex select-none gap-2 items-center text-sm py-4 px-6 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out cursor-pointer"
-                onClick={handleClickLista}
-                direction="right"
-                title="Collapsible item 4567891"
-              >
-                <Icon.EyeSlash className="min-w-[20px] max-w-[20px] w-[20px]" />
-                <span style={styleLinkNav}>Collapsible item 4567891</span>
-                <Icon.ChevronDownIcon className="min-w-[20px] max-w-[20px] w-[20px]" />
-              </Controls.TooltipComponent>
-              <ul
-                className="relative accordion-collapse collapse"
-                id="collapseSidenavSecEx2"
-                aria-labelledby="sidenavSecEx2"
-                data-bs-parent="#sidenavSecExample"
-              >
-                <li className="relative">
-                  <Link
-                    href="#!"
-                    className="flex items-center text-xs py-4 pl-12 pr-6 h-6 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out"
-                    data-mdb-ripple="true"
-                    data-mdb-ripple-color="primary"
-                  >
-                    Link 1
-                  </Link>
-                </li>
-                <li className="relative">
-                  <Link
-                    href="#!"
-                    className="flex items-center text-xs py-4 pl-12 pr-6 h-6 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out"
-                    data-mdb-ripple="true"
-                    data-mdb-ripple-color="primary"
-                  >
-                    Link 2
-                  </Link>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </div>
+
+        {/* Lista de Menus */}
+        {
+          menus.map((menu_1, index) => (
+            <LinkComponent key={index} menu={menu_1}>
+              {
+                menu_1.sub_menus.map((menu_2, index) => (
+                  <LinkComponent key={index} menu={menu_2}>
+                    {
+                      menu_2.sub_menus.map((menu_3, index) => (
+                        <LinkComponent key={index} menu={menu_3}></LinkComponent>
+                      ))
+                    }
+                  </LinkComponent>
+                ))
+              }
+            </LinkComponent>
+          ))
+        }
       </div>
 
       {/* HEADER */}
@@ -389,4 +294,50 @@ export default function SidebarComponent() {
       </nav>
     </header>
   );
+}
+
+const LinkComponent = ({ children, menu }) => {
+  const handleClickLista = (e) => e.target.closest("ul").querySelector("ul").classList.toggle("hide");
+
+  return (
+    <div>
+      <LabelComponent menu={menu} id="menu2" />
+
+      <ul className="relative">
+        {children}
+      </ul>
+    </div>
+  )
+}
+
+const LabelComponent = ({ menu }) => {
+  return (
+    <>
+      {
+        (menu.tipo_menu === false) ?
+          (
+            <span className="text-paragraph-3 font-Poppins font-semibold px-6" id="menu2">{menu.menu}</span>
+          ) : (menu.sub_menus?.length > 0) ?
+            (
+              <div title={menu.menu}>
+                <div className="flex gap-2">
+                  <Icon.EyeSlash className="min-w-[20px] max-w-[20px] w-[20px]" />
+                  <span style={styleLinkNav}>{menu.menu}</span>
+                </div>
+                <Icon.ChevronDownIcon className="min-w-[20px] max-w-[20px] w-[20px]" />
+              </div>
+            ) : (
+              <li className="relative" title={menu.menu}>
+                <Link
+                  className="flex select-none gap-2 items-center text-sm py-4 px-6 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out"
+                  to={menu.ruta}
+                >
+                  <Icon.EyeSlash className="min-w-[20px] max-w-[20px] w-[20px]" />
+                  <span style={{ whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}>{menu.menu}</span>
+                </Link>
+              </li>
+            )
+      }
+    </>
+  )
 }
