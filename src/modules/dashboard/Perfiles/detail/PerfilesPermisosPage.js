@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useAlert } from 'react-alert';
-import { json, Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Controls from '../../../../components/Controls';
 import ButtonsSaveComponent from '../../../../components/layout/form/ButtonsSaveComponent';
 import { SaveRequestData } from '../../../../helpers/helpRequestBackend';
@@ -75,10 +75,6 @@ export default function PerfilesPermisosPage () {
   useEffect(() => {
     getMenus();
   }, [])
-
-  useEffect(() => {
-    console.log(data)
-  }, [data])
 
   return (
     <div>

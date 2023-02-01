@@ -44,7 +44,15 @@ input, textarea { border: none; display: inline-block; box-sizing: border-box; o
 .table-base th { @apply font-semibold text-paragraph-3 px-6 py-2 }
 .table-base tbody tr { @apply bg-white border-b-[.25px] border-white-300 transition duration-300 ease-in-out hover:bg-white-200 }
 .table-base td { @apply px-6 py-2 whitespace-nowrap text-span-1 font-medium text-text }
+
+.modal-base { @apply absolute top-1/2 left-1/2 right-auto bottom-auto -mr-[50%] -translate-x-1/2 -translate-y-1/2 w-auto pointer-events-none }
+.modal-base-content { @apply modal-content border-none shadow-lg relative flex flex-col w-full pointer-events-auto bg-white bg-clip-padding rounded-md outline-none }
+.modal-base-header { @apply modal-header flex flex-shrink-0 items-center justify-between p-4 border-b rounded-t-md }
+.modal-base-header h2 { @apply text-text text-title-3 font-Poppins font-semibold }
+.modal-base-body { @apply relative p-4 }
+.ReactModal__Overlay { @apply z-[1000000] !bg-[#00000083] }
 /* style base - no modificar  */
+
 
 .title-banner { @apply font-semibold text-[90px] text-center; line-height: 1; }
 .show { display: block }

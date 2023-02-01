@@ -8,6 +8,7 @@ import BoxSpace from "./space/BoxSpace"
 import CardComponent from "./card/CardComponent"
 import TableComponent from "./table/TableComponent"
 import AccordionComponents from "./accordion/AccordionComponents"
+import ModalComponent from "./modal/ModalComponent"
 
 const Controls = {
   SelectComponent,
@@ -20,6 +21,7 @@ const Controls = {
   TableComponent,
   CheckboxComponent,
   AccordionComponents,
+  ModalComponent,
 }
 
 export default Controls

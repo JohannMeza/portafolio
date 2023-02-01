@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Controls from '../../../../components/Controls';
 import Icon from '../../../../components/icon/Icon';
 import ButtonsFilterComponent from '../../../../components/layout/form/ButtonsFilterComponent';
+import ModalComponent from '../../../../components/modal/ModalComponent';
 import { SaveRequestData } from '../../../../helpers/helpRequestBackend';
 import { useForm } from '../../../../hooks/useForm';
 import useLoaderContext from '../../../../hooks/useLoaderContext';
@@ -15,6 +16,7 @@ const dataInitial = { PERFIL: "", ESTADO: true }
 export default function PerfilesAdminPage () {
   const navigate = useNavigate();  
   const [data, handleInputFormChange, resetData] = useForm(dataInitial);
+  const [openModal, setOpenModal] = useState(false);
   const [perfil, setPerfil] = useState([]);
   const { setLoader } = useLoaderContext();
   const alert = useAlert();
@@ -79,7 +81,8 @@ export default function PerfilesAdminPage () {
                     <td>
                       <div className='flex gap-2 justify-center'>
                         <Controls.ButtonIconComponent title="Editar" icon={<Icon.Edit />} onClick={() => navigate(`/dashboard/perfiles/${el.id_perfiles}`)} />
-                        <Controls.ButtonIconComponent title="Administrar Permisos" icon={<Icon.Edit />} onClick={() => navigate(`/dashboard/perfiles/permisos/${el.id_perfiles}`)} />
+                        <Controls.ButtonIconComponent title="Administrar Menus" icon={<Icon.Edit />} onClick={() => navigate(`/dashboard/perfiles/permisos/${el.id_perfiles}`)} />
+                        <Controls.ButtonIconComponent title="Administrar Permisos" icon={<Icon.Edit />} onClick={() => setOpenModal(true)} />
                       </div>
                     </td>
                   </tr>
@@ -88,6 +91,10 @@ export default function PerfilesAdminPage () {
             </Controls.TableComponent>
           </div>
         </Controls.CardComponent>
+
+        <Controls.ModalComponent title="Hola  123" openModal={openModal} setOpenModal={setOpenModal}>
+          <Controls.ButtonComponent title={"Button"} />
+        </Controls.ModalComponent>
       </div>
     </div>
   )

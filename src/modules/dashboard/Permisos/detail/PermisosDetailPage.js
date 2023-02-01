@@ -42,7 +42,6 @@ export default function PermisosDetailPage() {
       queryId: 18,
       body: {ID_PERMISOS: id},
       success: (resp) => {
-        console.log(resp)
         setLoader(false)
         setData(resp.dataObject)
       }, 
