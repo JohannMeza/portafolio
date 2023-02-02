@@ -11,6 +11,7 @@ import UsuariosRoutes from "./Usuarios/UsuariosRoutes";
 import { AlertsConfig } from "../../config/AlertConfig";
 import MenuRoutes from "./Menu/MenuRoutes";
 import PermisosRoutes from "./Permisos/PermisosRoutes";
+import CategoriasRoutes from "./Categorias/CategoriasRoutes";
 
 export default function DashboardRoutes() {
   const { menu } = useMenuContext();
@@ -33,6 +34,7 @@ export default function DashboardRoutes() {
             <Route path="/perfiles/*" element={<PerfilesRoutes />} />
             <Route path="/menu/*" element={<MenuRoutes />} />
             <Route path="/permisos/*" element={<PermisosRoutes />} />
+            <Route path="/categorias/*" element={<CategoriasRoutes />} />
           </Routes>
         </div>
       </main>
