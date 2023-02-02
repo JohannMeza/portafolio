@@ -1,18 +1,19 @@
 import React from "react";
 import Modal from 'react-modal';
-export default function ModalComponent({ openModal = false, setOpenModal, title, children }) {
+import { classNames } from "../../util/ClassNames";
+export default function ModalComponent({ openModal = false, closeModal = {}, title, children, className }) {
   return (
     <Modal
       isOpen={openModal}
-      onRequestClose={() => setOpenModal(false)}
-      className='modal-base'
+      onRequestClose={closeModal}
+      className={classNames('modal-base', className)}
       contentLabel="Example Modal"
       ariaHideApp={false}
     >
       <div className="modal-base-content">
         <div className="modal-base-header">
           <h2>{ title }</h2>
-          <button className="btn-close box-content w-4 h-4 p-1 text-text border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-text hover:opacity-75 hover:no-underline" onClick={() => setOpenModal(false)}/>
+          <button className="btn-close box-content w-4 h-4 p-1 text-text border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-text hover:opacity-75 hover:no-underline" onClick={closeModal}/>
         </div>
 
         <div className="modal-base-body">{children}</div>
