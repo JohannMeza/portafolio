@@ -16,6 +16,7 @@ export default function InputComponent({
   autocomplete = "off",
   onChange,
   onClickIcon,
+  className = ""
 }) {
   return (
     <div style={{ width: "100%" }}>
@@ -86,8 +87,9 @@ export default function InputComponent({
               autoComplete={autocomplete}
               className={classNames(
                 "input-base",
+                className,
                 disabled ? "bg-white-200 border-white-400" : "",
-                value[name] ? "border-primary" : "",
+                value[name] ? "border-primary text-text" : "",
                 icon ? "pr-10" : "pr-4",
                 error[name]
                   ? "text-red-500 border-red-500 focus:border-red-500"

@@ -12,6 +12,9 @@ import { AlertsConfig } from "../../config/AlertConfig";
 import MenuRoutes from "./Menu/MenuRoutes";
 import PermisosRoutes from "./Permisos/PermisosRoutes";
 import CategoriasRoutes from "./Categorias/CategoriasRoutes";
+import ComentariosRoutes from "./Comentarios/ComentariosRoutes";
+import PublicacionesRoutes from "./Publicaciones/PublicacionesRoutes";
+import EtiquetasRoutes from "./Etiquetas/EtiquetasRoutes";
 
 export default function DashboardRoutes() {
   const { menu } = useMenuContext();
@@ -35,6 +38,9 @@ export default function DashboardRoutes() {
             <Route path="/menu/*" element={<MenuRoutes />} />
             <Route path="/permisos/*" element={<PermisosRoutes />} />
             <Route path="/categorias/*" element={<CategoriasRoutes />} />
+            <Route path="/comentarios/*" element={<ComentariosRoutes />} />
+            <Route path="/publicaciones/*" element={<PublicacionesRoutes />} />
+            <Route path="/etiquetas/*" element={<EtiquetasRoutes />} />
           </Routes>
         </div>
       </main>

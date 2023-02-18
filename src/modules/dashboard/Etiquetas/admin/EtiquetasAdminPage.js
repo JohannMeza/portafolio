@@ -1,0 +1,97 @@
+import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Controls from '../../../../components/Controls';
+import Icon from '../../../../components/icon/Icon';
+import ButtonsFilterComponent from '../../../../components/layout/form/ButtonsFilterComponent';
+import { SaveRequestData } from '../../../../helpers/helpRequestBackend';
+import { useForm } from '../../../../hooks/useForm';
+import useLoaderContext from '../../../../hooks/useLoaderContext';
+import { ListConstants } from '../../../../util/ListConstants';
+import PathConstants from '../../../../util/PathConstants';
+
+const dataInitial = { ETIQUETAS: "", ESTADO: true }
+export default function EtiquetasAdminPage() {
+  const [etiquetas, setEtiquetas] = useState([])
+  const [data, handleInputChange, resetData] = useForm(dataInitial)
+  const navigate = useNavigate();
+  const {setLoader} = useLoaderContext()
+
+  const listEtiquetas = () => {
+    setLoader(true)
+    SaveRequestData({
+      queryId: 25,
+      body: data,
+      success: (resp) => {
+        setLoader(false)
+        setEtiquetas(resp.dataList)
+      },
+      error: (err) => {
+        setLoader(false)
+        const { message, status } = err;
+        (status < 500) && alert.error(message)
+      }
+    })
+  }
+
+  useEffect(() => {
+    listEtiquetas()
+  }, [])
+  
+  return (
+    <div>
+      <div>
+        <Controls.CardComponent zIndex={10} title={"Filtrado"}>
+          <div className='flex gap-2'></div>
+          <div>
+            <div className='grid grid-cols-3 gap-4'>
+              <Controls.InputComponent label="Etiqueta" name="ETIQUETAS" value={data} onChange={handleInputChange} />
+              <Controls.SelectComponent label="Estado" name="ESTADO" value={data} list={ListConstants.LIST_ESTADOS} onChange={handleInputChange} />
+            </div>
+            <div>
+              <ButtonsFilterComponent handleClear={resetData} handleFilter={listEtiquetas} />
+            </div>
+          </div>
+        </Controls.CardComponent>
+      </div>
+      <div className='margin-base-top-card'>
+        <Controls.CardComponent zIndex={1} title={"Etiquetas"}>
+          <div className='flex gap-2'>
+            <Controls.ButtonComponent title="Nuevo" className="color-secondary" onClick={() => navigate(PathConstants.etiquetas_nuevo)} />
+          </div>
+          <div>
+            <Controls.TableComponent>
+              <thead>
+                <tr>
+                  <th className='text-left'>Id</th>
+                  <th className='text-left'>Etiquetas</th>
+                  <th className='text-left'>Estado</th>
+                  <th>Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  etiquetas.map((el, index) => (
+                    <tr key={index}>
+                      <td className='text-left'>{el.id_etiquetas}</td>
+                      <td className='text-left'>{el.etiqueta}</td>
+                      <td className='text-left'>{el.estado ? 'Activo' : 'Inactivo'}</td>
+                      <td>
+                        <Controls.ButtonIconComponent 
+                          title="Editar"
+                          onClick={() => navigate(PathConstants.etiquetas_detail + el.id_etiquetas)}
+                          icon={<Icon.Edit />}
+                        />
+                      </td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </Controls.TableComponent>
+          </div>
+        </Controls.CardComponent>
+      </div>
+    </div>
+  )
+}

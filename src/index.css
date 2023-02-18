@@ -24,6 +24,11 @@ input, textarea { border: none; display: inline-block; box-sizing: border-box; o
 .input-select-base-error { @apply border-red-500 text-red-500 }
 .input-select-base-error:not([data-headlessui-state="open"]) { @apply border-red-500 }
 
+.input-search-multiselect-base { @apply block w-full px-3 py-1.5 font-normal bg-white bg-clip-padding border-blue-600 border-2 border-solid rounded transition ease-in-out m-0 outline-none }
+.input-search-multiselect-base button { @apply w-full }
+.input-search-multiselect-base .options { @apply flex w-full gap-2 px-3 py-2 }
+.input-search-multiselect-base .options.active { @apply relative cursor-default select-none bg-white-200 text-secondary }
+
 
 .button-base-shadow { box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); }
 .button-base { @apply inline-block px-6 py-2.5 font-Poppins font-semibold leading-tight uppercase rounded button-base-shadow transition duration-150 ease-in-out } 

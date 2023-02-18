@@ -1,4 +1,5 @@
 import SelectComponent from "./form/input/SelectComponent"
+import SearchComponent from "./form/input/SearchComponent"
 import InputComponent from "./form/input/InputComponent"
 import CheckboxComponent from "./form/input/CheckboxComponent"
 import ButtonComponent from "./form/button/ButtonComponent"
@@ -12,6 +13,7 @@ import ModalComponent from "./modal/ModalComponent"
 
 const Controls = {
   SelectComponent,
+  SearchComponent,
   InputComponent,
   ButtonComponent,
   ButtonIconComponent,
