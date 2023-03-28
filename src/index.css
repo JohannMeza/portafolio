@@ -7,6 +7,11 @@ input, textarea { border: none; display: inline-block; box-sizing: border-box; o
 
 
 /* style base - no modificar  */
+.title-h1-base { @apply font-Poppins font-bold text-title-1 }
+.title-h2-base { @apply font-Poppins font-bold text-title-2 }
+.title-h3-base { @apply font-Poppins font-bold text-title-3 }
+.title-base { @apply font-Poppins font-bold }
+
 .loader-base { @apply flex items-center justify-center flex-col fixed z-[10000000000] w-full h-full bg-loader top-0 transition ease-linear }
 
 .color-primary { @apply bg-primary text-white hover:bg-primary active:bg-primary }
@@ -24,11 +29,14 @@ input, textarea { border: none; display: inline-block; box-sizing: border-box; o
 .input-select-base-error { @apply border-red-500 text-red-500 }
 .input-select-base-error:not([data-headlessui-state="open"]) { @apply border-red-500 }
 
-.input-search-multiselect-base { @apply block w-full px-3 py-1.5 font-normal bg-white bg-clip-padding border-blue-600 border-2 border-solid rounded transition ease-in-out m-0 outline-none }
+.input-search-multiselect-base { @apply block w-full px-3 py-1.5 font-normal bg-white bg-clip-padding border-text border border-solid rounded transition ease-in-out m-0 outline-none }
 .input-search-multiselect-base button { @apply w-full }
-.input-search-multiselect-base .options { @apply flex w-full gap-2 px-3 py-2 }
+.input-search-multiselect-base .options { @apply flex w-full items-stretch gap-2 px-3 py-2 }
 .input-search-multiselect-base .options.active { @apply relative cursor-default select-none bg-white-200 text-secondary }
 
+.input-file-base > div { @apply relative w-full h-28 select-none }
+.input-file-base > div > div { @apply bg-[#00000080] rounded-md opacity-0 hover:opacity-100 backdrop-blur-[2px] transition-opacity duration-500 w-full h-full relative z-20 flex justify-center items-center gap-5 }
+.input-file-base img { @apply h-full w-full object-cover rounded-md absolute top-0 z-10 }
 
 .button-base-shadow { box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); }
 .button-base { @apply inline-block px-6 py-2.5 font-Poppins font-semibold leading-tight uppercase rounded button-base-shadow transition duration-150 ease-in-out } 
@@ -55,6 +63,14 @@ input, textarea { border: none; display: inline-block; box-sizing: border-box; o
 .modal-base-header { @apply modal-header flex flex-shrink-0 items-center justify-between p-4 border-b rounded-t-md }
 .modal-base-header h2 { @apply text-text text-title-3 font-Poppins font-semibold }
 .modal-base-body { @apply relative p-4 }
+
+.publicacion-base-content { @apply !h-auto text-justify ; }
+.publicacion-base-content * { @apply font-OpenSans; line-height: 180% !important  }
+.publicacion-base-content iframe { @apply w-full h-[350px] rounded-lg; }
+.publicacion-base-content img { @apply w-full rounded-lg; }
+.publicacion-base-content iframe, .publicacion-base-content img { @apply transition-[filter] duration-500 }
+.publicacion-base-content:hover iframe, .publicacion-base-content:hover img { filter: drop-shadow(0px 24px 10px rgba(0, 0, 0, 0.04)) drop-shadow(0px 14px 8px rgba(0, 0, 0, 0.13)) drop-shadow(0px 6px 6px rgba(0, 0, 0, 0.21)) drop-shadow(0px 2px 3px rgba(0, 0, 0, 0.25)) drop-shadow(0px 0px 0px rgba(0, 0, 0, 0.25)); }
+
 .ReactModal__Overlay { @apply z-[1000000] !bg-[#00000083] }
 /* style base - no modificar  */
 

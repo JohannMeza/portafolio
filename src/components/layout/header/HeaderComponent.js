@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { Fragment } from "react";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../../assets/Logotipo.svg";
 import LogoWhite from "../../../assets/Logotipo-white.svg";
 import { classNames } from "../../../util/ClassNames";
 import Controls from "../../Controls";
 
 const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
+  { name: "Home", href: "/", current: true },
+  { name: "Blog", href: "/blog", current: false },
   { name: "Projects", href: "#", current: false },
   { name: "Calendar", href: "#", current: false },
 ];
@@ -37,7 +37,8 @@ export default function HeaderComponent() {
       as="nav"
       className={classNames(
         isTop ? "bg-none w-screen fixed" : "bg-white w-screen fixed",
-        "ease-in-out duration-500"
+        "ease-in-out duration-500 z-50",
+        "top-0"
       )}
     >
       {({ open }) => (
@@ -93,9 +94,9 @@ export default function HeaderComponent() {
                 <div className="hidden sm:ml-6 sm:flex items-center">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
-                        href={item.href}
+                        to={item.href}
                         className={classNames(
                           isTop ? "text-white" : "text-secondary",
                           "font-Poppins font-semibold text-gray-300 hover:bg-gray-700 hover:underline px-3 py-2 rounded-md text-sm"
@@ -103,7 +104,7 @@ export default function HeaderComponent() {
                         aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>

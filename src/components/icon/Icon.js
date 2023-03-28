@@ -16,7 +16,7 @@ const Icon = {
   ChevronDownIcon: ChevronDownIcon,
   Edit: PencilSquareIcon,
   XCircle: XCircleIcon,
-  xMark: XMarkIcon
+  Close: XMarkIcon
 }
 
 export default Icon

@@ -1,27 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { SaveRequestData } from "../../../helpers/helpRequestBackend";
+import useAuthContext from "../../../hooks/useAuthContext";
 import useLoaderContext from "../../../hooks/useLoaderContext";
-import useMenuContext from "../../../hooks/useMenuContext";
 import { classNames } from "../../../util/ClassNames";
 import Icon from "../../icon/Icon";
 
 const heightHeader = 65;
 const styleLinkNav = { whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" };
-const show = { display: "none" };
 
-export default function SidebarComponent() {
-  const { menu, setMenu } = useMenuContext();
+export default function SidebarComponent({ menu, setMenu }) {
+  const { user } = useAuthContext();
   const { setLoader } = useLoaderContext();
   const [menus, setMenus] = useState([]);
   const styleNavbar = { paddingTop: heightHeader + "px" };
   const styleHeader = { height: heightHeader + "px" };
-
-  const getMenus = () => {
+  const getMenus = () => { 
     setLoader(true)
     SaveRequestData({
       queryId: 15,
-      body: { ID_PERFIL: 7 },
+      body: { ID_PERFIL: user.ID_PERFILES },
       success: (resp) => {
         setLoader(false)
         setMenus(resp.dataList)
@@ -33,10 +31,11 @@ export default function SidebarComponent() {
       }
     })
   }
-
+  
   useEffect(() => {
-    getMenus();
-  }, [])
+    (user) && getMenus();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.ID_PERFILES])
 
   return (
     <header>
@@ -47,7 +46,7 @@ export default function SidebarComponent() {
       >
         {/* Nombre de Usuario */}
         <div className="pt-4 pb-2 px-6">
-          <Link href="#!">
+          <Link to="#">
             <div className="flex items-center">
               <div className="shrink-0">
                 <img
@@ -57,8 +56,8 @@ export default function SidebarComponent() {
                 />
               </div>
               <div className="grow ml-3">
-                <p className="text-title-3 font-semibold text-blue-600">
-                  Jason McCoel
+                <p className="text-title-3 font-semibold text-blue-600" style={styleLinkNav}>
+                  {user?.NOMBRE} {user?.APELLIDO}
                 </p>
               </div>
             </div>
@@ -135,38 +134,38 @@ export default function SidebarComponent() {
             className="collapse navbar-collapse flex-grow items-center"
             id="navbarSupportedContent1"
           >
-            <a className="text-xl text-white pr-2 font-semibold" href="#">
+            <Link className="text-xl text-white pr-2 font-semibold" to="#">
               Navbar
-            </a>
+            </Link>
             <ul className="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
               <li className="nav-item p-2">
-                <a className="nav-link text-white" href="#">
+                <Link className="nav-link text-white" to="#">
                   Dashboard
-                </a>
+                </Link>
               </li>
               <li className="nav-item p-2">
-                <a
+                <Link
                   className="nav-link text-white opacity-60 hover:opacity-80 focus:opacity-80 p-0"
-                  href="#"
+                  to="#"
                 >
                   Team
-                </a>
+                </Link>
               </li>
               <li className="nav-item p-2">
-                <a
+                <Link
                   className="nav-link text-white opacity-60 hover:opacity-80 focus:opacity-80 p-0"
-                  href="#"
+                  to="#"
                 >
                   Projects
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
 
           <div className="flex items-center relative">
-            <a
+            <Link
               className="text-white opacity-60 hover:opacity-80 focus:opacity-80 mr-4"
-              href="#"
+              to="#"
             >
               <svg
                 aria-hidden="true"
@@ -183,11 +182,11 @@ export default function SidebarComponent() {
                   d="M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z"
                 ></path>
               </svg>
-            </a>
+            </Link>
             <div className="dropdown relative">
-              <a
+              <Link
                 className="text-white opacity-60 hover:opacity-80 focus:opacity-80 mr-4 dropdown-toggle hidden-arrow flex items-center"
-                href="#"
+                to="#"
                 id="dropdownMenuButton1"
                 role="button"
                 data-bs-toggle="dropdown"
@@ -211,26 +210,26 @@ export default function SidebarComponent() {
                 <span className="text-white bg-red-700 absolute rounded-full text-xs -mt-2.5 ml-2 py-0 px-1.5">
                   1
                 </span>
-              </a>
+              </Link>
               <ul
-                className="dropdown-menu min-w-max absolute hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded-lg shadow-lg mt-1 hidden m-0 bg-clip-padding border-none left-auto right-0"
+                className="dropdown-menu min-w-max absolute bg-white text-base z-50 float-left py-2 list-none text-left rounded-lg shadow-lg mt-1 hidden m-0 bg-clip-padding border-none left-auto right-0"
                 aria-labelledby="dropdownMenuButton1"
               >
                 <li>
-                  <a
+                  <Link
                     className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100"
-                    href="#"
+                    to="#"
                   >
                     Action
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100"
-                    href="#"
+                    to="#"
                   >
                     Another action
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <Link
@@ -243,9 +242,9 @@ export default function SidebarComponent() {
               </ul>
             </div>
             <div className="dropdown relative">
-              <a
+              <Link
                 className="dropdown-toggle flex items-center hidden-arrow"
-                href="#"
+                to="#"
                 id="dropdownMenuButton2"
                 role="button"
                 data-bs-toggle="dropdown"
@@ -258,26 +257,26 @@ export default function SidebarComponent() {
                   alt=""
                   loading="lazy"
                 />
-              </a>
+              </Link>
               <ul
-                className="dropdown-menu min-w-max absolute hidden bg-white text-base z-50 float-left py-2 list-none text-left rounded-lg shadow-lg mt-1 hidden m-0 bg-clip-padding border-none left-auto right-0"
+                className="dropdown-menu min-w-max absolute bg-white text-base z-50 float-left py-2 list-none text-left rounded-lg shadow-lg mt-1 hidden m-0 bg-clip-padding border-none left-auto right-0"
                 aria-labelledby="dropdownMenuButton2"
               >
                 <li>
-                  <a
+                  <Link
                     className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100"
-                    href="#"
+                    to="#"
                   >
                     Action
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a
+                  <Link
                     className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100"
-                    href="#"
+                    to="#"
                   >
                     Another action
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <Link
@@ -297,8 +296,6 @@ export default function SidebarComponent() {
 }
 
 const LinkComponent = ({ children, menu }) => {
-  const handleClickLista = (e) => e.target.closest("ul").querySelector("ul").classList.toggle("hide");
-
   return (
     <div>
       <LabelComponent menu={menu} id="menu2" />
@@ -314,7 +311,7 @@ const LabelComponent = ({ menu }) => {
   return (
     <>
       {
-        (menu.tipo_menu === false) ?
+        (menu.id_estado_menu === 6) ?
           (
             <span className="text-paragraph-3 font-Poppins font-semibold px-6" id="menu2">{menu.menu}</span>
           ) : (menu.sub_menus?.length > 0) ?
@@ -330,7 +327,7 @@ const LabelComponent = ({ menu }) => {
               <li className="relative" title={menu.menu}>
                 <Link
                   className="flex select-none gap-2 items-center text-sm py-4 px-6 h-12 overflow-hidden text-gray-700 text-ellipsis whitespace-nowrap rounded hover:text-blue-600 hover:bg-blue-50 transition duration-300 ease-in-out"
-                  to={menu.ruta}
+                  to={`/dashboard/${menu.ruta}`}
                 >
                   <Icon.EyeSlash className="min-w-[20px] max-w-[20px] w-[20px]" />
                   <span style={{ whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}>{menu.menu}</span>

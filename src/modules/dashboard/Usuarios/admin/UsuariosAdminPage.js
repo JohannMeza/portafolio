@@ -8,16 +8,18 @@ import Icon from '../../../../components/icon/Icon';
 import ButtonsFilterComponent from '../../../../components/layout/form/ButtonsFilterComponent';
 import { SaveRequestData } from '../../../../helpers/helpRequestBackend';
 import { useForm } from '../../../../hooks/useForm';
+import { useListEstados } from '../../../../hooks/useListEstados';
 import useLoaderContext from '../../../../hooks/useLoaderContext';
 import { ListConstants } from '../../../../util/ListConstants';
 
-const dataInitial = { NOMBRE: "", EMAIL: "", ESTADO: true }
+const dataInitial = { NOMBRE: "", EMAIL: "", ID_ESTADO: 4 }
 
 export default function UsuariosAdminPage () {
   const navigate = useNavigate();
   const {setLoader} = useLoaderContext()
   const [data, handleInputFormChange, resetData] = useForm(dataInitial)
   const [usuarios, setUsuarios] = useState([])
+  const estados = useListEstados('4,5')
   const alert = useAlert()
 
   const listUsuarios = () => {
@@ -50,7 +52,7 @@ export default function UsuariosAdminPage () {
             <div className='grid grid-cols-3 gap-4'>
               <Controls.InputComponent label="Nombre" value={data} onChange={handleInputFormChange} name="NOMBRE" />
               <Controls.InputComponent label="Email" value={data} onChange={handleInputFormChange} name="EMAIL" />
-              <Controls.SelectComponent label="Estado" value={data} list={ListConstants.LIST_ESTADOS} onChange={handleInputFormChange} name="ESTADO" />
+              <Controls.SelectComponent label="Estado" value={data} list={estados} onChange={handleInputFormChange} name="ID_ESTADO" />
             </div>
             <ButtonsFilterComponent handleClear={resetData} handleFilter={listUsuarios} />
           </div>
@@ -81,7 +83,15 @@ export default function UsuariosAdminPage () {
                       <td className='text-left'>{el.NOMBRE}</td>
                       <td className='text-left'>{el.APELLIDO}</td>
                       <td className='text-left'>{el.EMAIL}</td>
-                      <td className='text-left'>{el.ESTADO ? 'Activo' : 'Inactivo'}</td>
+                      <td className='text-left'>
+                      <span className='inline-block'>
+                          <Controls.ButtonEstadoComponent
+                            title={el.ESTADO}
+                            colorButton={{ background: el.COLOR }}
+                            colorText={{ color: el.COLOR }}
+                          />
+                        </span>
+                      </td>
                       <td>
                         <Controls.ButtonIconComponent 
                           title='Editar'

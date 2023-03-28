@@ -1,8 +1,6 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { Combobox, Listbox, Transition } from "@headlessui/react";
-import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import Controls from "../../Controls";
-import { useEffect } from "react";
 import { classNames } from "../../../util/ClassNames";
 import { useForm } from "../../../hooks/useForm";
 import Icon from "../../icon/Icon";
@@ -14,6 +12,7 @@ export default function SearchComponent({
   onChange,
   list = [],
   error = { empty: "" },
+  zIndex = 50
 }) {
   const [valueSearch, handleInputChange, resetData] = useForm({ search: "" });
 
@@ -35,7 +34,7 @@ export default function SearchComponent({
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full" style={{ zIndex: zIndex }}>
       <label
         htmlFor="price"
         className={classNames(
@@ -48,13 +47,13 @@ export default function SearchComponent({
       <div className="relative mt-1 rounded-md shadow-sm">
         <Combobox multiple>
           <div className={classNames(
-              value[name] ? "border-primary" : "",
+              value[name] ? "border-blue-600 border-2" : "",
               error[name] ? "text-red-500 border-red-500 focus:border-red-500" : "",
               "relative input-search-multiselect-base"
             )}>
             
             <Listbox>
-              <Listbox.Button>
+              <Listbox.Button style={{ outline: "none" }}>
                 <span className="inline-block w-full h-1">
                   {list.length > 0 && (
                     <ul
@@ -117,7 +116,7 @@ export default function SearchComponent({
                       el.label.match(new RegExp(valueSearch.search, "ig"))
                     )
                     .map((el, index, {}, active = value[name].split(",").includes(`${el.value}`) ? true : false) => (
-                      <div className={classNames("options", active ? "active" : "")} key={index}>
+                      <label htmlFor={el.value} className={classNames("options", active ? "active" : "")} key={index}>
                         <input
                           type="checkbox"
                           checked={active}
@@ -126,10 +125,10 @@ export default function SearchComponent({
                           id={el.value}
                           onChange={() => handleChangeChecked(el)}
                         />
-                        <label className="w-full" htmlFor={el.value}>
+                        <div className="w-full text-text">
                           {el.label}
-                        </label>
-                      </div>
+                        </div>
+                      </label>
                     ))}
                 </Listbox.Options>
               </Transition>

@@ -7,18 +7,21 @@ import Icon from '../../../../components/icon/Icon';
 import ButtonsFilterComponent from '../../../../components/layout/form/ButtonsFilterComponent';
 import { SaveRequestData } from '../../../../helpers/helpRequestBackend';
 import { useForm } from '../../../../hooks/useForm';
+import { useListEstados } from '../../../../hooks/useListEstados';
 import useLoaderContext from '../../../../hooks/useLoaderContext';
 import { classNames } from '../../../../util/ClassNames';
 import { ListConstants } from '../../../../util/ListConstants';
 
-const dataInitial = { MENU: "", ESTADO: true, TIPO_MENU: null }
+const dataInitial = { MENU: "", ID_ESTADO: 4, ID_ESTADO_MENU: 6 }
 const listMenuTipo = [ { value: null, label: "Seleccione" }, { value: true, label: "Menú" }, { value: false, label: "Categoria" } ];
 
 export default function MenuAdminPage () {
   const navigate = useNavigate();
   const [data, handleInputChange, resetData] = useForm(dataInitial)
   const [listMenus, setListMenus] = useState([]);
-  const {setLoader} = useLoaderContext();
+  const { setLoader } = useLoaderContext();
+  const estados = useListEstados("4,5")
+  const estados_menu = useListEstados("7,6");
 
   const listarMenus = () => {
     setLoader(true)
@@ -49,8 +52,8 @@ export default function MenuAdminPage () {
           <div>
             <div className='grid grid-cols-3 gap-4'>
               <Controls.InputComponent label="Menu" name="MENU" value={data} onChange={handleInputChange} />
-              <Controls.SelectComponent label="Tipo Menú" name="TIPO_MENU" value={data} list={listMenuTipo} onChange={handleInputChange} />
-              <Controls.SelectComponent label="Estado" name="ESTADO" value={data} list={ListConstants.LIST_ESTADOS} onChange={handleInputChange} />
+              <Controls.SelectComponent label="Tipo Menú" name="ID_ESTADO_MENU" value={data} list={estados_menu} onChange={handleInputChange} />
+              <Controls.SelectComponent label="Estado" name="ID_ESTADO" value={data} list={estados} onChange={handleInputChange} />
             </div>
             <div>
               <ButtonsFilterComponent handleClear={resetData} handleFilter={listarMenus} />
@@ -80,13 +83,21 @@ export default function MenuAdminPage () {
                     <tr key={index}>
                       <td className='text-left'>{el.id_menu}</td>
                       <td className='text-left'>{el.menu}</td>
-                      <td className='text-left'>{el.estado ? 'Activo' : 'Inactivo'}</td>
                       <td className='text-left'>
                         <span className='inline-block'>
-                          <Controls.ButtonIconComponent 
-                            title={ el.tipo_menu ? "Menú" : "Categoria" }
-                            onClick={() => {}}
-                            className={classNames("p-1 w-5 h-5", el.tipo_menu ? "bg-blue-500" : "bg-yellow-500")}
+                          <Controls.ButtonEstadoComponent
+                            title={el.estado}
+                            colorButton={{ background: el.color_estado }}
+                            colorText={{ color: el.color_estado }}
+                          />
+                        </span>
+                      </td>
+                      <td className='text-left'>
+                        <span className='inline-block'>
+                          <Controls.ButtonEstadoComponent
+                            title={el.estado_menu}
+                            colorButton={{ background: el.color_estado_menu }}
+                            colorText={{ color: el.color_estado_menu }}
                           />
                         </span>
                       </td>

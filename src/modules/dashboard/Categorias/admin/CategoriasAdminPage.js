@@ -7,16 +7,18 @@ import Icon from '../../../../components/icon/Icon';
 import ButtonsFilterComponent from '../../../../components/layout/form/ButtonsFilterComponent';
 import { SaveRequestData } from '../../../../helpers/helpRequestBackend';
 import { useForm } from '../../../../hooks/useForm';
+import { useListEstados } from '../../../../hooks/useListEstados';
 import useLoaderContext from '../../../../hooks/useLoaderContext';
 import { classNames } from '../../../../util/ClassNames';
 import { ListConstants } from '../../../../util/ListConstants';
 
-const dataInitial = { CATEGORIAS: "", ESTADO: true }
+const dataInitial = { CATEGORIAS: "", ESTADO: 4 }
 export default function CategoriasAdminPage() {
   const [categorias, setCategorias] = useState([])
   const [data, handleInputChange, resetData] = useForm(dataInitial)
   const navigate = useNavigate();
-  const {setLoader} = useLoaderContext()
+  const { setLoader } = useLoaderContext()
+  const estados = useListEstados('4,5')
 
   const listCategorias = () => {
     setLoader(true)
@@ -25,7 +27,6 @@ export default function CategoriasAdminPage() {
       body: data,
       success: (resp) => {
         setLoader(false)
-        console.log(resp)
         setCategorias(resp.dataList)
       },
       error: (err) => {
@@ -48,7 +49,7 @@ export default function CategoriasAdminPage() {
           <div>
             <div className='grid grid-cols-3 gap-4'>
               <Controls.InputComponent label="Categorias" name="CATEGORIAS" value={data} onChange={handleInputChange} />
-              <Controls.SelectComponent label="Estado" name="ESTADO" value={data} list={ListConstants.LIST_ESTADOS} onChange={handleInputChange} />
+              <Controls.SelectComponent label="Estado" name="ESTADO" value={data} list={estados} onChange={handleInputChange} />
             </div>
             <div>
               <ButtonsFilterComponent handleClear={resetData} handleFilter={listCategorias} />

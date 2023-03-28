@@ -2,16 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useAlert } from 'react-alert';
 import { useNavigate, useParams } from 'react-router-dom';
 import Controls from '../../../../components/Controls';
-import ButtonsFilterComponent from '../../../../components/layout/form/ButtonsFilterComponent';
 import ButtonsSaveComponent from '../../../../components/layout/form/ButtonsSaveComponent';
 import { SaveRequestData } from '../../../../helpers/helpRequestBackend';
 import { useFormValidation } from '../../../../hooks/useFormValidation';
+import { useListEstados } from '../../../../hooks/useListEstados';
 import useLoaderContext from '../../../../hooks/useLoaderContext';
-import { ListConstants } from '../../../../util/ListConstants';
 
-const dataInitial = { MENU_PADRE: null, MENU: "", ORDEN: "", ICON: "", ESTADO: true, TIPO: true, RUTA: "" }
+const dataInitial = { MENU_PADRE: null, MENU: "", ORDEN: "", ICON: "", ID_ESTADO: 4, ID_ESTADO_MENU: 6, RUTA: "", COMPONENTE: null }
 const listMenuPadre = { value: null, label: "Seleccione" };
-const listMenuTipo = [ { value: null, label: "Seleccione" }, { value: true, label: "Menú" }, { value: false, label: "Categoria" } ];
 
 export default function MenuDetailPage () {
   const validate = (fieldValues = data) =>  {
@@ -25,12 +23,16 @@ export default function MenuDetailPage () {
       temp.ORDEN = fieldValues.ORDEN === "" ? "El campo Orden es requerido" : "";
     } 
 
-    if ("ESTADO" in fieldValues) {
+    if ("ID_ESTADO" in fieldValues) {
       temp.ESTADO = fieldValues.ESTADO === null ? "El campo Estado es requerido" : "";
     } 
 
-    if ("TIPO" in fieldValues) {
-      temp.TIPO = fieldValues.TIPO === null ? "El campo Tipo Menú es requerido" : "";
+    if ("COMPONENTE" in fieldValues) {
+      temp.COMPONENTE = !fieldValues.RUTA && data.TIPO ? "El campo Componente es requerido" : "";
+    } 
+
+    if ("ID_ESTADO_MENU" in fieldValues) {
+      temp.ID_ESTADO_MENU = fieldValues.ID_ESTADO_MENU === null ? "El campo Estado Menú es requerido" : "";
     } 
 
     if ("RUTA" in fieldValues) {
@@ -45,6 +47,8 @@ export default function MenuDetailPage () {
   const navigate = useNavigate();
   const {data, setData, errors, setErrors, handleInputFormChange} = useFormValidation(dataInitial, true, validate)
   const [menuPadre, setMenuPadre] = useState([]);
+  const estados = useListEstados("4,5");
+  const estados_menu = useListEstados("7,6");
   const {setLoader} = useLoaderContext();
   const {id} = useParams();
   const alert = useAlert();
@@ -104,8 +108,8 @@ export default function MenuDetailPage () {
   }
 
   useEffect(() => {
-    if (data.TIPO === false) setData((data) => { return { ...data, RUTA: "" } })  
-  }, [data.TIPO])
+    if (data.ID_ESTADO_MENU === 6) setData((data) => { return { ...data, RUTA: "", COMPONENTE: "" } })  
+  }, [data.ID_ESTADO_MENU])
 
   useEffect(() => {
     listarMenusPadres()
@@ -121,11 +125,12 @@ export default function MenuDetailPage () {
             <div className='grid grid-cols-3 gap-4'>
               <Controls.InputComponent label="Menú" name="MENU" value={data} onChange={handleInputFormChange} error={errors} />
               <Controls.SelectComponent label="Menu Padre" name="MENU_PADRE" list={menuPadre} type="number" value={data} onChange={handleInputFormChange} className="relative z-20" />
-              <Controls.SelectComponent label="Tipo" type='number' name="TIPO" list={listMenuTipo} value={data} onChange={handleInputFormChange} error={errors} />
-              <Controls.InputComponent label="Ruta" name="RUTA" value={data} disabled={!data.TIPO && true} onChange={handleInputFormChange} error={errors} />
+              <Controls.SelectComponent label="Tipo" name="ID_ESTADO_MENU" list={estados_menu} value={data} onChange={handleInputFormChange} error={errors} />
+              <Controls.InputComponent label="Ruta" name="RUTA" value={data} disabled={data?.ID_ESTADO_MENU === 6 && true} onChange={handleInputFormChange} error={errors} />
+              <Controls.InputComponent label="Componente" name="COMPONENTE" value={data} disabled={data?.ID_ESTADO_MENU === 6 && true} onChange={handleInputFormChange} error={errors} />
               <Controls.InputComponent label="Orden" type='number' name="ORDEN" value={data} onChange={handleInputFormChange} error={errors} />
               <Controls.InputComponent label="Icon" name="ICON" value={data} onChange={handleInputFormChange} />
-              <Controls.SelectComponent label="Estado" name="ESTADO" value={data} list={ListConstants.LIST_ESTADOS} onChange={handleInputFormChange} error={errors} className="relative z-10" />
+              <Controls.SelectComponent label="Estado" name="ID_ESTADO" value={data} list={estados} onChange={handleInputFormChange} error={errors} className="relative z-10" />
             </div>
           </div>
         </Controls.CardComponent>

@@ -9,10 +9,11 @@ import ButtonsSaveComponent from "../../../../components/layout/form/ButtonsSave
 import ModalComponent from "../../../../components/modal/ModalComponent";
 import { SaveRequestData } from "../../../../helpers/helpRequestBackend";
 import { useForm } from "../../../../hooks/useForm";
+import { useListEstados } from "../../../../hooks/useListEstados";
 import useLoaderContext from "../../../../hooks/useLoaderContext";
 import { ListConstants } from "../../../../util/ListConstants";
 
-const dataInitial = { PERFIL: "", ESTADO: true };
+const dataInitial = { PERFIL: "", ID_ESTADO: 4 };
 
 export default function PerfilesAdminPage() {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ export default function PerfilesAdminPage() {
   const [openModal, setOpenModal] = useState(false);
   const [idPerfiles, setIdPerfiles] = useState(null)
   const alert = useAlert();
+  const estados = useListEstados('4,5')
 
   const getPerfiles = () => {
     setLoader(true);
@@ -58,8 +60,8 @@ export default function PerfilesAdminPage() {
                 onChange={handleInputFormChange}
               />
               <Controls.SelectComponent
-                list={ListConstants.LIST_ESTADOS}
-                name="ESTADO"
+                list={estados}
+                name="ID_ESTADO"
                 value={data}
                 label="Estado"
                 onChange={handleInputFormChange}
@@ -96,7 +98,15 @@ export default function PerfilesAdminPage() {
                   <tr key={index}>
                     <td>{el.id_perfiles}</td>
                     <td>{el.perfil}</td>
-                    <td>{el.estado ? "Activo" : "Inactivo"}</td>
+                    <td>
+                      <span className='inline-block'>
+                        <Controls.ButtonEstadoComponent
+                          title={el.estado}
+                          colorButton={{ background: el.color }}
+                          colorText={{ color: el.color }}
+                        />
+                      </span>
+                    </td>
                     <td>
                       <div className="flex gap-2 justify-center">
                         <Controls.ButtonIconComponent

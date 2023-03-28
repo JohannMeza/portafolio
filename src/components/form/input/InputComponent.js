@@ -16,7 +16,7 @@ export default function InputComponent({
   autocomplete = "off",
   onChange,
   onClickIcon,
-  className = ""
+  className = "",
 }) {
   return (
     <div style={{ width: "100%" }}>
@@ -25,7 +25,7 @@ export default function InputComponent({
           <label
             htmlFor="price"
             className={classNames(
-              error ? "text-red-500" : "text-text",
+              error[name] ? "text-red-500" : "text-text",
               "block text-sm font-medium text-start"
             )}
           >
@@ -67,7 +67,7 @@ export default function InputComponent({
           </label>
           <div className="relative mt-1 rounded-md shadow-sm">
             {icon && (
-              <div className={classNames(onClickIcon ? "button-icon-base p-0 cursor-pointer" : "pointer-events-none", "absolute inset-y-0 right-0 flex items-center pr-3")}>
+              <div className={classNames(onClickIcon ? "button-icon-base p-0 cursor-pointer" : "pointer-events-none", "absolute inset-y-0 right-0 flex items-center justify-center")}>
                 <span 
                   className={classNames(onClickIcon ? "active:bg-white-200 rounded-full" : "", "text-gray-500 sm:text-sm icon-principal text-text")}
                   onClick={onClickIcon}

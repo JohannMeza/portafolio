@@ -8,6 +8,7 @@ import FrontRoutes from '../modules/front/FrontRoutes';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 
+
 export default function IndexRoute () {  
   return (
     <Routes>

@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Controls from '../../../../components/Controls';
+import useAuthContext from '../../../../hooks/useAuthContext';
 import useMenuContext from '../../../../hooks/useMenuContext';
 
 export default function HomePage () {
   const navigate = useNavigate()
   const { menu, setMenu } = useMenuContext()
+  const { user } = useAuthContext();
 
   const thead = [ "#", "Last", "first" ]
   const tbody = [

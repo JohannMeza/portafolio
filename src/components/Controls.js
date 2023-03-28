@@ -1,9 +1,11 @@
 import SelectComponent from "./form/input/SelectComponent"
 import SearchComponent from "./form/input/SearchComponent"
 import InputComponent from "./form/input/InputComponent"
+import FileComponent from "./form/input/FileComponent"
 import CheckboxComponent from "./form/input/CheckboxComponent"
 import ButtonComponent from "./form/button/ButtonComponent"
 import ButtonIconComponent from "./form/button/ButtonIconComponent"
+import ButtonEstadoComponent from './form/button/ButtonEstadoComponent'
 import TooltipComponent from "./tooltip/TooltipComponent"
 import BoxSpace from "./space/BoxSpace"
 import CardComponent from "./card/CardComponent"
@@ -15,6 +17,7 @@ const Controls = {
   SelectComponent,
   SearchComponent,
   InputComponent,
+  FileComponent,
   ButtonComponent,
   ButtonIconComponent,
   TooltipComponent,
@@ -24,6 +27,7 @@ const Controls = {
   CheckboxComponent,
   AccordionComponents,
   ModalComponent,
+  ButtonEstadoComponent,
 }
 
 export default Controls

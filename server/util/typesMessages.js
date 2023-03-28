@@ -21,7 +21,14 @@ const successMessageObject = (data) => {
   let config = {};
   let objResp = {...data};
   delete data.error; delete data.status; delete data.message; delete data.messageServer; delete data.dataList; delete data.dataObject
-  if (data.error) config = data
+  if (objResp.error) config = {
+    error: true, 
+    status: objResp.status || 401, 
+    message: objResp.message || objResp.error || "Error en el query", 
+    dataList: null, 
+    dataObject: null, 
+    messageServer: objResp.messageServer 
+  }
   else config = { 
     error: objResp.error || false, 
     status: objResp.status || 201, 

@@ -7,8 +7,9 @@ import { ListConstants } from '../../../../util/ListConstants';
 import { useAlert } from "react-alert";
 import { useFormValidation } from '../../../../hooks/useFormValidation';
 import useLoaderContext from '../../../../hooks/useLoaderContext';
+import { useListEstados } from '../../../../hooks/useListEstados';
 
-const dataInitial = { PERFIL: "", ESTADO: true }
+const dataInitial = { PERFIL: "", ID_ESTADO: 4 }
 
 export default function PerfilesDetailPage () {
   const validate = (fieldValues = data) =>  {
@@ -18,8 +19,8 @@ export default function PerfilesDetailPage () {
       temp.PERFIL = fieldValues.PERFIL === "" ? "El campo Perfil es requerido" : "";
     } 
 
-    if ("ESTADO" in fieldValues) {
-      temp.ESTADO = typeof fieldValues.ESTADO !== "boolean" ? "El campo Estado es requerido" : "";
+    if ("ID_ESTADO" in fieldValues) {
+      temp.ID_ESTADO = fieldValues.ID_ESTADO === null ? "El campo Estado es requerido" : "";
     } 
     
     setErrors({...temp});
@@ -32,12 +33,13 @@ export default function PerfilesDetailPage () {
   const navigate = useNavigate();
   const {data, setData, errors, setErrors, handleInputFormChange} = useFormValidation(dataInitial, true, validate);
   const alert = useAlert();
+  const estados = useListEstados('4,5');
   const handleBack = () => navigate("/dashboard/perfiles/admin")
   const { setLoader } = useLoaderContext()
 
   const handleAction = () => {
-    setLoader(true)
     if (validate()) {
+      setLoader(true)
       SaveRequestData({
         queryId: 1,
         body: {...data, ID_PERFIL: id}, 
@@ -84,7 +86,7 @@ export default function PerfilesDetailPage () {
           <div>
             <div className='grid grid-cols-3 gap-4'>
               <Controls.InputComponent label="Nombre" name="PERFIL" onChange={handleInputFormChange} value={data} error={errors} />
-              <Controls.SelectComponent list={ListConstants.LIST_ESTADOS} name="ESTADO" value={data} error={errors} label="Estado" onChange={handleInputFormChange} />
+              <Controls.SelectComponent list={estados} name="ID_ESTADO" value={data} error={errors} label="Estado" onChange={handleInputFormChange} />
             </div>
             <ButtonsSaveComponent handleBack={handleBack} handleAction={handleAction} />
           </div>

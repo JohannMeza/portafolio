@@ -55,11 +55,20 @@ export default function PerfilesPermisosPage () {
 
   const handleButtonSave = () => {
     const arrMenuActive = Array.from(Object.entries(data).filter(el => el[1]), el => { return {id_menu: parseInt(el[0].split("-")[2]), value: el[1]} });
+    const arrMenuPadres = Array.from(listMenus, el => { return { id_menu_padre: el.id_menu, sub_menus: Array.from(el.sub_menus, el => el.id_menu ) } })
 
+    let listMenusAll = Array.from(arrMenuPadres, el => el.id_menu_padre);
+    let listMenusActivos = Array.from(arrMenuActive, el => el.id_menu);
+
+    let listMenusFilter = arrMenuActive.filter(el => {
+      if (listMenusAll.includes(el.id_menu)) return el;
+      return arrMenuPadres.find(el1 => (el1.sub_menus.includes(el.id_menu) && listMenusActivos.includes(el1.id_menu_padre)) && el )
+    })
+    
     setLoader(true)
     SaveRequestData({
       queryId: 14,
-      body: { ID_PERFIL: id, MENUS: arrMenuActive }, 
+      body: { ID_PERFIL: id, MENUS: listMenusFilter }, 
       success: (resp) => {
         setLoader(false)
         alert.success(resp.message)
@@ -86,8 +95,8 @@ export default function PerfilesPermisosPage () {
               listMenus.map((menu_1, index) => (
                 <ListMenusComponents menu={menu_1} key={index} handleChange={handleInputChange} data={data} name={menu_1.id_menu} namePadre={null} label={menu_1.menu}>
                   {
-                    menu_1?.sub_menus.length > 0 && 
-                    menu_1?.sub_menus?.map((menu_2, index) => (
+                    
+                    menu_1.sub_menus.map((menu_2, index) => (
                       <ListMenusComponents menu={menu_2} key={index} handleChange={handleInputChange} data={data} name={menu_2.id_menu} namePadre={menu_1.id_menu} label={menu_2.menu}>
                       </ListMenusComponents>
                     ))
@@ -104,10 +113,23 @@ export default function PerfilesPermisosPage () {
 }
 
 
-const ListMenusComponents = ({ children, handleChange, data, name, label, namePadre }) => {
+const ListMenusComponents = ({ children, handleChange, data, name, label, namePadre }) => {  
   return (
     <Controls.AccordionComponents target={`target-menu-${name}`} checked={data[`menu-name-${name}`]}>
-      <Controls.CheckboxComponent label={label} id={`id-menu-${name}`} value={data[`menu-name-${namePadre}`] === false ? false : data} onChange={handleChange} className="select-none cursor-pointer" name={`menu-name-${name}`} />
+      <Controls.CheckboxComponent
+        label={label}
+        id={`id-menu-${name}`}
+        onChange={handleChange}
+        className="select-none cursor-pointer"
+        name={`menu-name-${name}`}
+        value={
+          namePadre === null && data[`menu-name-${name}`] // Menu Padre - Activo 
+            ? data
+            : data[`menu-name-${namePadre}`] && data[`menu-name-${name}`] // Menu Hijo - Activo
+              ? data
+              : false
+        }
+      />
       <React.Fragment>{children}</React.Fragment>
     </Controls.AccordionComponents>
   )

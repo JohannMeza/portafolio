@@ -1,24 +1,26 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import { classNames } from '../../../util/ClassNames'
 import Icon from '../../icon/Icon'
+import { useEffect } from 'react'
 
 export default function SelectComponent({ 
-  list, 
-  value = null,
+  list = [], 
   error = {empty: ""},
-  label, 
+  value = {empty: ""},
+  label = "", 
   name = "empty",
-  onChange,
+  onChange = () => {},
   style = {},
   className = ""
 }) {
+
   return (
     <div style={style} className={className}>
       <label htmlFor="price" className={classNames("block text-sm font-medium text-start", error[name] && "text-red-500")}>{label}</label>
       <Listbox 
-        value={list.filter(el => el.value === value[name])[0]} 
+        value={list.length > 0 && list.filter(el => el.value === value[name])[0]} 
         onChange={({value}) => onChange({ target: { name, value }})}
       >
         <div className="relative z-[500000] mt-1 shadow-sm">
@@ -35,7 +37,7 @@ export default function SelectComponent({
             leaveTo="opacity-0"
           >
             <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-paragraph-2 shadow-lg ring-1 ring-primary ring-opacity-5 focus:outline-none sm:text-paragraph-3">
-              {list.map((person, personIdx) => (
+              {list.length > 0 && list.map((person, personIdx) => (
                 <Listbox.Option
                   key={personIdx}
                   className={({ active }) => `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? 'bg-white-200 text-secondary' : 'text-text'}`}
