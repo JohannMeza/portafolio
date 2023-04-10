@@ -1,7 +1,7 @@
 import React from "react";
 import FrontCardComponent from "../../../../components/card/FrontcardComponent";
 import { useEffect } from "react";
-import { SaveRequestData } from "../../../../helpers/helpRequestBackend";
+import { SaveRequestData, SendRequestData } from "../../../../helpers/helpRequestBackend";
 import useLoaderContext from "../../../../hooks/useLoaderContext";
 import { useState } from "react";
 import { Fade } from "react-awesome-reveal";
@@ -14,7 +14,7 @@ export default function BlogContent() {
   const navigate = useNavigate();
 
   const getPublicaciones = () => {
-    SaveRequestData({
+    SendRequestData({
       queryId: 34,
       body: {id_categorias: 1},
       success: (resp) => {

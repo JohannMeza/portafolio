@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useQuill } from 'react-quilljs';
 import { useParams } from 'react-router-dom';
 import FooterComponent from '../../../../components/layout/footer/FooterComponent';
-import { SaveRequestData } from '../../../../helpers/helpRequestBackend';
+import { SendRequestData } from '../../../../helpers/helpRequestBackend';
 import useLoaderContext from '../../../../hooks/useLoaderContext';
 import PublicacionBanner from '../detail/PublicacionBanner';
 import PublicacionContent from '../detail/PublicacionContent';
@@ -12,6 +12,7 @@ import PublicacionContent from '../detail/PublicacionContent';
 export default function PublicacionPage() {
   const { setLoader } = useLoaderContext();
   const [publicacion, setPublicacion] = useState({});
+  const [publicacionesRelacionadas, setPublicacionesRelacionadas] = useState([])
   const { id } = useParams();
   const { quill, quillRef } = useQuill({
     readOnly: true,
@@ -19,7 +20,7 @@ export default function PublicacionPage() {
   })
 
   const getPublicacion = () => {
-    SaveRequestData({
+    SendRequestData({
       queryId: 36,
       body: { id_publicaciones: id },
       success: (resp) => {
@@ -36,13 +37,12 @@ export default function PublicacionPage() {
   }
 
   const getPublicacionesRelacionadas = () => {
-    SaveRequestData({
-      queryId: 36,
+    SendRequestData({
+      queryId: 38,
       body: { id_publicaciones: id },
       success: (resp) => {
+        setPublicacionesRelacionadas(resp.dataList)
         setLoader(false);
-        setPublicacion(resp.dataObject)
-        quill.setContents(JSON.parse(resp.dataObject.PUBLICACION))
       },
       error: (err) => {
         setLoader(false);
@@ -62,7 +62,7 @@ export default function PublicacionPage() {
     <div>
       <PublicacionBanner title={publicacion.TITULO} />
       <br />
-      <PublicacionContent publicacion={publicacion} quillRef={quillRef} />
+      <PublicacionContent publicacion={publicacion} quillRef={quillRef} publicacionesRelacionadas={publicacionesRelacionadas} />
       <br />
       <FooterComponent />
     </div>

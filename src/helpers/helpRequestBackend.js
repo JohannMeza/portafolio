@@ -3,6 +3,12 @@ import { AlertUtilMessage } from "../util/AlertUtil";
 import EnvConstants from "../util/EnvConstants";
 import { UploadFile } from "../util/UploadFile";
 
+/**
+ * 
+ * @param {object} config 
+ * @returns Realiza peticion validando si el token es valido
+ */
+
 export const SaveRequestData = (config) => {
   let { queryId, body = {}, success, error, pagination, rowsPerPage, page } = config;
 
@@ -30,6 +36,46 @@ export const SaveRequestData = (config) => {
     })
   }
 }
+
+/**
+ * 
+ * @param {object} config 
+ * @returns Realiza peticion sin validar el token o enviar una path en el config
+ */
+
+export const SendRequestData = (config) => { 
+  let { queryId, body = {}, success, error, pagination, rowsPerPage, page, path } = config;
+  if (!path) path = EnvConstants.APP_URL_BASE_FRONT;
+  if (pagination) {
+    let params = {queryId, body: { ...body, rowsPerPage, page, }}
+    return SERVICES_POST(path, params) 
+    .then(resp => {
+      success(resp.data)
+    })
+    .catch((err) => {
+      let { response } = err;
+      let { status, message } = response.data
+      error(response.data)
+      AlertUtilMessage({ title: `Error ${status}`, text: message, type: "error" })
+    })
+  } else {
+    let params = {queryId, body}
+    return SERVICES_POST(path, params)
+    .then(resp => success({...resp.data}))
+    .catch(err => {
+      let { response } = err;
+      let { status, message } = response.data
+      if (status >= 500) AlertUtilMessage({ title: `Error ${status}`, text: message, type: "error" })
+      error(response.data)
+    })
+  } 
+}
+
+/**
+ * 
+ * @param {object} config 
+ * @returns Realiza una peticion y guarda un archivo en cloudinary
+ */
 
 export const FileRequestData = (config) => {
   let { queryId, body, success, error, pagination, rowsPerPage, page } = config;
@@ -59,34 +105,11 @@ export const FileRequestData = (config) => {
   }
 }
 
-export const SendRequestData = (config) => { 
-  let { queryId, body = {}, success, error, pagination, rowsPerPage, page, path } = config;
-  if (!path) return AlertUtilMessage({ title: `Error 401`, text: "Ruta no encontrada", type: "error" })
-  if (pagination) {
-    let params = {queryId, body: { ...body, rowsPerPage, page, }}
-    return SERVICES_POST(path, params) 
-    .then(resp => {
-      success(resp.data)
-    })
-    .catch((err) => {
-      let { response } = err;
-      let { status, message } = response.data
-      error(response.data)
-      AlertUtilMessage({ title: `Error ${status}`, text: message, type: "error" })
-    })
-  } else {
-    let params = {queryId, ...body}
-    return SERVICES_POST(path, params)
-    .then(resp => success({...resp.data}))
-    .catch(err => {
-      let { response } = err;
-      let { status, message } = response.data
-      if (status >= 500) AlertUtilMessage({ title: `Error ${status}`, text: message, type: "error" })
-      error(response.data)
-    })
-  }
-  
-}
+/**
+ * 
+ * @param {object} config 
+ * @returns Login
+ */
 
 export const SignInRequestData = (config) => {
   let { queryId, body = {}, success, error, pagination, rowsPerPage, page } = config;
@@ -115,6 +138,12 @@ export const SignInRequestData = (config) => {
     })
   }
 }
+
+/**
+ * 
+ * @param {object} config 
+ * @returns Register
+ */
 
 export const SignUpRequestData = (config) => {
   let { queryId, body = {}, success, error, pagination, rowsPerPage, page } = config;

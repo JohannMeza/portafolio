@@ -55,8 +55,8 @@ export default function SignInPage() {
         setLoader(false);
         login(resp.token);
         alert.success(resp.message)
-        navigate(PathConstants.home_admin)
         setUser(resp.dataObject)
+        window.location.reload()
       },
       error: (err) => {
         setLoader(false);

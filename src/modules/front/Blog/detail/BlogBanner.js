@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { Fade } from "react-awesome-reveal";
 import styled from "styled-components";
-import { SaveRequestData } from "../../../../helpers/helpRequestBackend";
+import { SaveRequestData, SendRequestData } from "../../../../helpers/helpRequestBackend";
 import FrontCardComponent from "../../../../components/card/FrontcardComponent";
 import useLoaderContext from "../../../../hooks/useLoaderContext";
 import { useNavigate } from "react-router-dom";
@@ -11,7 +11,7 @@ export default function BlogBanner() {
   const [categorias, setCategorias] = useState([]);
   const navigate = useNavigate();
   const getLastPublicaciones = () => {
-    SaveRequestData({
+    SendRequestData({
       queryId: 37,
       body: {id_categorias: 1},
       success: (resp) => {
