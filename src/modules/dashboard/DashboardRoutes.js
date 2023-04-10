@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
+import { classNames } from "../../util/ClassNames";
+import { SaveRequestData } from "../../helpers/helpRequestBackend";
 import SidebarComponent from "../../components/layout/sidebar/SidebarComponent";
 import useMenuContext from "../../hooks/useMenuContext";
-import { classNames } from "../../util/ClassNames";
 import useLoaderContext from "../../hooks/useLoaderContext";
-import { SaveRequestData } from "../../helpers/helpRequestBackend";
 import useAuthContext from "../../hooks/useAuthContext";
-import { useState } from "react";
+import PerfilRoutes from "./MiPerfil/MiPerfilRoutes";
 
 export default function DashboardRoutes() {
   const { menu, setMenu } = useMenuContext();
@@ -21,7 +21,6 @@ export default function DashboardRoutes() {
       body: { ID_PERFIL: user.ID_PERFILES },
       success: (resp) => {
         setLoader(false);
-        let arrFileComponents = []
         resp.dataList.forEach(el => {
           if (el.ruta && el.componente) {
             let rutaBase = el.ruta.split('/')[0]
@@ -61,20 +60,9 @@ export default function DashboardRoutes() {
       >
         <div>
           <Routes>
-              {arrModules.length > 0 && arrModules.map((el, index) => ((el.ruta && el.componente) && <Route path={el.ruta} key={index} element={el.componente} />))}
+            {arrModules.length > 0 && arrModules.map((el, index) => ((el.ruta && el.componente) && <Route path={el.ruta} key={index} element={el.componente} />))}
+            <Route path="/mi_perfil/*" element={<PerfilRoutes />}></Route>
           </Routes>
-
-          {/* <Routes>
-            <Route path="/home/*" element={<HomeRoutes />} />
-            <Route path="/usuarios/*" element={<UsuariosRoutes />} />
-            <Route path="/perfiles/*" element={<PerfilesRoutes />} />
-            <Route path="/menu/*" element={<MenuRoutes />} />
-            <Route path="/permisos/*" element={<PermisosRoutes />} />
-            <Route path="/categorias/*" element={<CategoriasRoutes />} />
-            <Route path="/comentarios/*" element={<ComentariosRoutes />} />
-            <Route path="/publicaciones/*" element={<PublicacionesRoutes />} />
-            <Route path="/etiquetas/*" element={<EtiquetasRoutes />} />
-          </Routes> */}
         </div>
       </main>
     </>

@@ -6,8 +6,9 @@ import useLoaderContext from "../../../hooks/useLoaderContext";
 import { classNames } from "../../../util/ClassNames";
 import Icon from "../../icon/Icon";
 
-const heightHeader = 65;
 const styleLinkNav = { whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" };
+const listPerfil = [{ to: '/dashboard/mi_perfil/admin', label: 'Mi Perfil' }]
+const heightHeader = 65;
 
 export default function SidebarComponent({ menu, setMenu }) {
   const { user } = useAuthContext();
@@ -262,30 +263,7 @@ export default function SidebarComponent({ menu, setMenu }) {
                 className="dropdown-menu min-w-max absolute bg-white text-base z-50 float-left py-2 list-none text-left rounded-lg shadow-lg mt-1 hidden m-0 bg-clip-padding border-none left-auto right-0"
                 aria-labelledby="dropdownMenuButton2"
               >
-                <li>
-                  <Link
-                    className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100"
-                    to="#"
-                  >
-                    Action
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100"
-                    to="#"
-                  >
-                    Another action
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100"
-                    to="/logout"
-                  >
-                    Something else here
-                  </Link>
-                </li>
+                { listPerfil.map((el, index) => <ListaComponent key={index} to={el.to} label={el.label} />) }
               </ul>
             </div>
           </div>
@@ -293,6 +271,14 @@ export default function SidebarComponent({ menu, setMenu }) {
       </nav>
     </header>
   );
+}
+
+const ListaComponent = ({ to, label }) => {
+  return (
+    <li>
+      <Link className="dropdown-item text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-gray-700 hover:bg-gray-100" to={to}>{ label }</Link>
+    </li>
+  )
 }
 
 const LinkComponent = ({ children, menu }) => {

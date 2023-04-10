@@ -1,7 +1,8 @@
 const { config } = require("dotenv");
-const APP_DEVELOPMENT = true;
-
+const { ValidarEntorno } = require("./UtilsComponents");
 config();
+
+const APP_DEVELOPMENT = ValidarEntorno(process.env.APP_ENV);
 
 // Desarrollo
 const APP_DEV_DB_HOST = process.env.APP_DEV_DB_HOST;
