@@ -13,18 +13,26 @@ export default function SelectComponent({
   name = "empty",
   onChange = () => {},
   style = {},
-  className = ""
+  className = "",
+  disabled = false
 }) {
 
   return (
     <div style={style} className={className}>
       <label htmlFor="price" className={classNames("block text-sm font-medium text-start", error[name] && "text-red-500")}>{label}</label>
-      <Listbox 
+      <Listbox
         value={list.length > 0 && list.filter(el => el.value === value[name])[0]} 
         onChange={({value}) => onChange({ target: { name, value }})}
+        disabled={disabled}
       >
         <div className="relative z-[500000] mt-1 shadow-sm">
-          <Listbox.Button className={classNames(error[name] ? "input-select-base input-select-base-error" : "input-select-base")}>
+          <Listbox.Button className={classNames(
+            error[name]
+              ? "input-select-base input-select-base-error"
+              : disabled
+                ? "input-select-base opacity-60 bg-white-200"
+                : "input-select-base"
+            )}>
             <span className="block truncate text-start">{list.filter(el => el.value === value[name])[0]?.label}</span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <ChevronUpDownIcon className="h-5 w-5 text-text" aria-hidden="true"/>

@@ -12,6 +12,7 @@ import ButtonsSaveComponent from '../../../../components/layout/form/ButtonsSave
 import useFileUpload from '../../../../hooks/useFileUpload';
 import 'quill/dist/quill.snow.css';
 import { useListEstados } from '../../../../hooks/useListEstados';
+import EnvConstants from '../../../../util/EnvConstants';
 
 const dataInitial = { TITULO: "", ID_CATEGORIAS: "", ID_ETIQUETAS: "", PUBLICACION: "", ID_ESTADO: null, PORTADA: "", DESCRIPCION_CORTA: "" }
 
@@ -70,7 +71,6 @@ export default function PublicacionesDetailPage() {
   })
 
   const savePublicacion = () => {
-    
     if (validate()) {
       let arrCategorias = [...data.ID_CATEGORIAS.split(',').map(el => { return { id_categorias: el } })]
       let arrEtiquetas = [...data.ID_ETIQUETAS.split(',').map(el => { return { id_etiquetas: el } })]
@@ -101,6 +101,7 @@ export default function PublicacionesDetailPage() {
         })
       } else {
         FileRequestData({
+          path: EnvConstants.APP_URL_UPLOAD,
           queryId: 29,
           body: {
             ...data,

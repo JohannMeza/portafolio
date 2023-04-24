@@ -20,6 +20,7 @@ export default function PublicacionPage() {
   })
 
   const getPublicacion = () => {
+    setLoader(true)
     SendRequestData({
       queryId: 36,
       body: { id_publicaciones: id },
@@ -62,7 +63,7 @@ export default function PublicacionPage() {
     <div>
       <PublicacionBanner title={publicacion.TITULO} />
       <br />
-      <PublicacionContent publicacion={publicacion} quillRef={quillRef} publicacionesRelacionadas={publicacionesRelacionadas} />
+      <PublicacionContent id={id} publicacion={publicacion} quillRef={quillRef} publicacionesRelacionadas={publicacionesRelacionadas} />
       <br />
       <FooterComponent />
     </div>

@@ -78,11 +78,11 @@ export const SendRequestData = (config) => {
  */
 
 export const FileRequestData = (config) => {
-  let { queryId, body, success, error, pagination, rowsPerPage, page } = config;
+  let { queryId, body, success, error, pagination, rowsPerPage, page, path } = config;
 
   if (pagination) {
     let params = UploadFile({queryId, body: { ...body, rowsPerPage, page, }})
-    return UPLOAD_POST(EnvConstants.APP_URL_UPLOAD, params) 
+    return UPLOAD_POST(path, params) 
     .then(resp => {
       success(resp.data)
     })
@@ -94,7 +94,7 @@ export const FileRequestData = (config) => {
     })
   } else {
     let params = UploadFile({queryId, ...body})
-    return UPLOAD_POST(EnvConstants.APP_URL_UPLOAD, params)
+    return UPLOAD_POST(path, params)
     .then(resp => success({...resp.data}))
     .catch(err => {
       let { response } = err;

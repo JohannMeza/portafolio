@@ -1,4 +1,6 @@
 const PathConstants = {
+  /* DASHBOARD */
+
   // Home
   home_admin: "/dashboard/home/admin",
 
@@ -15,7 +17,10 @@ const PathConstants = {
   // Usuarios
   usuarios_admin: "/dashboard/usuarios/admin",
   usuarios_nuevo: "/dashboard/usuarios/admin",
-  usuarios_detail: "/dashboard/usuarios/admin"
+  usuarios_detail: "/dashboard/usuarios/admin",
+
+  /* FRONT */
+  blog_publicacion: "/blog/"
 }
 
 export default PathConstants;

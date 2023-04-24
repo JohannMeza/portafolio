@@ -11,6 +11,7 @@ const EnvConstants = {
   APP_URL_BASE:         (APP_DEVELOPMENT ? APP_DEV_URL   : APP_PRD_URL) + "/api/options_auth",
   APP_URL_BASE_FRONT:   (APP_DEVELOPMENT ? APP_DEV_URL   : APP_PRD_URL) + "/api/options",
   APP_URL_UPLOAD:       (APP_DEVELOPMENT ? APP_DEV_URL   : APP_PRD_URL) + "/api/upload",
+  APP_URL_UPLOAD_USER:  (APP_DEVELOPMENT ? APP_DEV_URL   : APP_PRD_URL) + "/api/upload_user",
   APP_URL_SIGN_IN:      (APP_DEVELOPMENT ? APP_DEV_URL   : APP_PRD_URL) + "/api/sign_in",
   APP_URL_SIGN_UP:      (APP_DEVELOPMENT ? APP_DEV_URL   : APP_PRD_URL) + "/api/sign_up",
   APP_URL_ACCESS:       (APP_DEVELOPMENT ? APP_DEV_URL   : APP_PRD_URL) + "/api/access",

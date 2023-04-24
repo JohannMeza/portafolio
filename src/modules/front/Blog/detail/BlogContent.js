@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Fade } from "react-awesome-reveal";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import PathConstants from "../../../../util/PathConstants";
 
 export default function BlogContent() {
   const {setLoader} = useLoaderContext();
@@ -48,7 +49,7 @@ export default function BlogContent() {
                     title={publicacion.titulo}
                     descripcionCorta={publicacion.descripcion_corta}
                     image={publicacion.portada}
-                    navigate={() => navigate(`/blog/${el.categoria}/${publicacion.id_publicaciones}`)}
+                    navigate={() => navigate(`${PathConstants.blog_publicacion}${el.categoria}/${publicacion.id_publicaciones}`)}
                   />
                 </Fade>
               ))}

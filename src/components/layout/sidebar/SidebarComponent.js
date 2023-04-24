@@ -47,7 +47,7 @@ export default function SidebarComponent({ menu, setMenu }) {
       >
         {/* Nombre de Usuario */}
         <div className="pt-4 pb-2 px-6">
-          <Link to="#">
+          <Link to="/dashboard/mi_perfil/admin">
             <div className="flex items-center">
               <div className="shrink-0">
                 <img

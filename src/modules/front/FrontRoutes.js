@@ -4,6 +4,7 @@ import HeaderComponent from '../../components/layout/header/HeaderComponent';
 import BlogPage from './Blog/admin/BlogPage';
 import PublicacionPage from './Blog/admin/PublicacionPage';
 import HomePage from './Home/admin/HomePage';
+import BlogRoutes from './Blog/BlogRoutes';
 
 export default function FrontRoutes () { 
   return (
@@ -13,8 +14,7 @@ export default function FrontRoutes () {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/home" element={<HomePage />} />
-          <Route path="/blog" element={<BlogPage />} />
-          <Route path="/blog/:categoria/:id" element={<PublicacionPage />} />
+          <Route path="/blog/*" element={<BlogRoutes />} />
         </Routes>
       </div>
     </div>

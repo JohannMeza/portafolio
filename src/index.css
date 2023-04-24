@@ -40,7 +40,7 @@ input, textarea { border: none; display: inline-block; box-sizing: border-box; o
 
 .button-base-shadow { box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); }
 .button-base { @apply inline-block px-6 py-2.5 font-Poppins font-semibold leading-tight uppercase rounded button-base-shadow transition duration-150 ease-in-out } 
-.button-icon-base { @apply p-2 inline-block rounded-full leading-normal uppercase w-9 h-9 button-base-shadow focus:outline-none focus:ring-0 transition duration-150 ease-in-out } 
+.button-icon-base { @apply p-2 flex justify-center items-center rounded-full leading-normal uppercase w-9 h-9 button-base-shadow focus:outline-none focus:ring-0 transition duration-150 ease-in-out } 
 
 .tooltip { @apply p-2 }
 .tooltip-inner { @apply py-1 px-4 bg-[#6D6D6D] text-white rounded }

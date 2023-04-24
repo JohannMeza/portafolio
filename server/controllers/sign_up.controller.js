@@ -5,15 +5,14 @@ const bcrypt = require("bcrypt")
 
 const SignUpController = async (req, res) => {
   try {
-    const { PASSWORD } = req.body.body;
+    const { body, queryId } = req.body;
+    const { PASSWORD } = body;
     let passEncode;
-
     if (PASSWORD) {
       const salt = await bcrypt.genSalt(10);
       passEncode = bcrypt.hashSync(PASSWORD, salt)
     }
-
-    const result = await REQUEST_DATABASE({ body: { ...req.body.body, PASSWORD: passEncode }, queryId: 8 });
+    const result = await REQUEST_DATABASE({ body: { ...body, PASSWORD: passEncode }, queryId: queryId || 8 });
     if (result.error) throw({ ...result });
     
     return res.status(201).json(result)

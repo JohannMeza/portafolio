@@ -7,6 +7,7 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import { XCircleIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { ArchiveBoxXMarkIcon } from "@heroicons/react/24/outline";
 
 const Icon = {
   ArrowRight: ArrowRightIcon,
@@ -16,7 +17,8 @@ const Icon = {
   ChevronDownIcon: ChevronDownIcon,
   Edit: PencilSquareIcon,
   XCircle: XCircleIcon,
-  Close: XMarkIcon
+  Close: XMarkIcon,
+  Delete: ArchiveBoxXMarkIcon
 }
 
 export default Icon

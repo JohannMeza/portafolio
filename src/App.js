@@ -4,7 +4,7 @@ import { Provider as AlertProvider } from "react-alert";
 import { AlertsConfig } from './config/AlertConfig';
 import { registerPlugin } from 'react-filepond'
 import IndexRoute from "./routers/IndexRoute";
-import AlertTemplate from "react-alert-template-basic";
+import AlertTemplate from "./config/AlertStyle";
 import AuthContextProvider from "./context/AuthContext";
 import LoaderContextProvider from "./context/LoaderContext";
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation'
